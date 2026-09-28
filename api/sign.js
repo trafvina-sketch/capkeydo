@@ -17,18 +17,19 @@ module.exports = (req, res) => {
   }
   const { deviceId, password } = body || {};
 
-  // Kiểm tra cấu hình biến môi trường
-  const adminPassword = process.env.ADMIN_PASSWORD;
+  // Mật khẩu admin (ưu tiên ENV ADMIN_PASSWORD, mặc định: Minhyang18@@)
+  const adminPassword = process.env.ADMIN_PASSWORD || "Minhyang18@@";
   const rawPrivateKey = process.env.PRIVATE_KEY;
-
-  if (!adminPassword || !rawPrivateKey) {
-    console.error("LỖI: Chưa cấu hình ADMIN_PASSWORD hoặc PRIVATE_KEY trong Environment Variables!");
-    return res.status(500).json({ error: "Server chưa cấu hình khóa bí mật" });
-  }
 
   // Kiểm tra mật khẩu admin
   if (password !== adminPassword) {
     return res.status(401).json({ error: "Sai mật khẩu admin" });
+  }
+
+  // Kiểm tra biến môi trường PRIVATE_KEY
+  if (!rawPrivateKey) {
+    console.error("LỖI: Chưa cấu hình PRIVATE_KEY trong Environment Variables của Vercel!");
+    return res.status(500).json({ error: "Server chưa cấu hình PRIVATE_KEY trên Vercel" });
   }
 
   // Kiểm tra Device ID

@@ -115,8 +115,8 @@
     const btnGen = document.getElementById("btnGen");
     const btnCopy = document.getElementById("btnCopy");
 
-    // Khôi phục mật khẩu đã lưu
-    pwInput.value = localStorage.getItem("capkey_admin_pw") || "";
+    // Khôi phục mật khẩu đã lưu hoặc dùng mặc định Minhyang18@@
+    pwInput.value = localStorage.getItem("capkey_admin_pw") || "Minhyang18@@";
 
     // Hỗ trợ nhấn Enter để tạo key
     [pwInput, devInput].forEach(el => {
